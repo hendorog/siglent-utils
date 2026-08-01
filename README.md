@@ -8,7 +8,7 @@ README explaining what it does and how to use it.
 
 | Utility | Description |
 |---|---|
-| [csa_to_touchstone](utils/csa_to_touchstone/) | Extract S-parameter traces from SNA5000A-series VNA state files (`.csa`/`.sta`) into Touchstone `.sNp` files |
+| [csa_to_touchstone](utils/csa_to_touchstone/) | Extract S-parameter traces from SNA5000A-series VNA state files (`.csa`/`.sta`) into Touchstone `.sNp` files, CSV, or plots |
 
 ## License
 

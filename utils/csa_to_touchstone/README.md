@@ -2,10 +2,12 @@
 
 Extracts S-parameter trace data from a Siglent **SNA5000A-series VNA** state
 file (`.csa` / `.sta`) into standard [Touchstone](https://ibis.org/touchstone_ver2.0/touchstone_ver2_0.pdf)
-`.sNp` files — no instrument needed, pure Python 3 standard library.
+`.sNp` files, with optional CSV export and plotting — no instrument needed.
+Touchstone and CSV output are pure Python 3 standard library; plotting needs
+matplotlib.
 
 ```
-usage: csa_to_touchstone.py [-h] [-o OUTDIR] [--info] state_file
+usage: csa_to_touchstone.py [-h] [-o OUTDIR] [--info] [--csv] [--plot] [--show] state_file
 
 positional arguments:
   state_file            .csa or .sta file saved by the instrument
@@ -13,6 +15,9 @@ positional arguments:
 options:
   -o, --outdir OUTDIR   output directory (default: alongside the input file)
   --info                only list channels/sections, write nothing
+  --csv                 also write a CSV per channel (freq + re/im/dB/deg per S-param)
+  --plot                also write a PNG plot per channel (requires matplotlib)
+  --show                display the plots in interactive windows
 ```
 
 One Touchstone file is written per channel, named `<input>_chN.sKp`, where K
@@ -20,14 +25,23 @@ is the number of ports the channel actually drove — a channel sweeping
 sources 1–3 yields a complete 3×3 S-matrix and therefore an `.s3p`.
 
 ```
-$ python3 csa_to_touchstone.py mystate.csa
-ch1: 201 pts 2.274500-2.325500 GHz, driven ports [1, 2] -> mystate_ch1.s2p
-ch2: 201 pts 2.262235-2.413235 GHz, driven ports [1, 2, 3] -> mystate_ch2.s3p
+$ python3 csa_to_touchstone.py mystate.csa --csv --plot
+ch1: 201 pts 2.274500-2.325500 GHz, driven ports [1, 2] -> mystate_ch1.s2p, mystate_ch1.csv, mystate_ch1.png
+ch2: 201 pts 2.262235-2.413235 GHz, driven ports [1, 2, 3] -> mystate_ch2.s3p, mystate_ch2.csv, mystate_ch2.png
 ```
 
-Output is Touchstone v1: `# Hz S RI R 50`, real/imaginary pairs, standard
+Touchstone output is v1: `# Hz S RI R 50`, real/imaginary pairs, standard
 2-port ordering (S11 S21 S12 S22), row-per-line matrix layout for 3+ ports.
 Files load directly into scikit-rf, ADS, AWR, QUCS, etc.
+
+CSV output has one row per frequency point and, for every S-parameter of the
+square matrix, four columns: `Sxy_re`, `Sxy_im`, `Sxy_db` (log-magnitude) and
+`Sxy_deg` (phase) — ready for spreadsheets or pandas.
+
+Plots show log-magnitude in dB versus frequency, one panel per source port,
+lines colored by receiver port and labeled at the line end:
+
+![example plot](example_plot.png)
 
 ### The .csa file format
 
