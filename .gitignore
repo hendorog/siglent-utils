@@ -1,0 +1,7 @@
+__pycache__/
+*.pyc
+# instrument files and extracted data stay local
+*.csa
+*.sta
+*.s[0-9]p
+*:Zone.Identifier
