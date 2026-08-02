@@ -9,6 +9,7 @@ README explaining what it does and how to use it.
 | Utility | Description |
 |---|---|
 | [csa_to_touchstone](utils/csa_to_touchstone/) | Extract S-parameter traces from SNA5000A-series VNA state files (`.csa`/`.sta`) into Touchstone `.sNp` files, CSV, or plots |
+| [touchstone_to_sna](utils/touchstone_to_sna/) | Upload Touchstone `.sNp` traces to an SNA5000A as memory ("user") traces over SCPI |
 
 ## License
 
