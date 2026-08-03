@@ -69,9 +69,13 @@ end; a non-empty queue exits non-zero.
 
 ## Notes
 
+- **Not yet validated on hardware.** The command sequence was built against
+  the SCPI tree of firmware V1.0.0.2.15 and the SNA5000A programming guide,
+  but has not been run against a real instrument. Use `--dry-run` to inspect
+  what would be sent; reports welcome.
 - `:CALC:TRAC:DATA:SMEMory` is implemented by firmware V1.0.0.2.15 but
-  absent from older programming guides — semantics match the Keysight ENA
-  equivalent (write corrected complex data into the memory trace).
+  absent from older programming guides — semantics are expected to match the
+  Keysight ENA equivalent (write corrected complex data into the memory trace).
 - The Touchstone parser accepts v1 files in RI, MA, or DB format with any
   frequency unit, including multi-line matrix rows for 3+ ports.
 - Memory traces live on top of a measured trace, so uploading S-parameters
